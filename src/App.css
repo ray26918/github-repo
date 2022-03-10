@@ -5,3 +5,7 @@
   padding: 2% 0;
   background-color:antiquewhite;
 }
+
+.ant-list-header{
+  text-align: center;
+}
