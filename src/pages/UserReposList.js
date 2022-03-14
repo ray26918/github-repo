@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { List, message, Avatar, Skeleton, Divider } from 'antd';
-import { useParams } from "react-router-dom";
+import { List, message, Avatar, Skeleton, Divider, Button } from 'antd';
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserRepos } from "../redux/action";
+import { MessageOutlined } from '@ant-design/icons'
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function UserReposList() {
@@ -41,19 +42,15 @@ export default function UserReposList() {
     useEffect(() => {
 	    loadMoreData();
     }, []);
-      
-    // useEffect(() => {
-		// 	console.log(data)
-    // }, [data])
+
 
     return(
       <div
         id="scrollableDiv"
         style={{
-          height: 400,
+          height: 800,
           overflow: 'auto',
-          padding: '0 16px',
-          border: '1px solid rgba(140, 140, 140, 0.35)',
+          padding: '10px 400px',
         }}
       >
         <InfiniteScroll
@@ -63,9 +60,14 @@ export default function UserReposList() {
           loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
           endMessage={<Divider plain> 載入完畢 </Divider>}
           scrollableTarget="scrollableDiv"
+          style={{ 
+            padding: '10px 50px',
+            border: '1px solid rgba(140, 140, 140, 0.35)',
+            borderRadius: '30px'
+           }}
         >
           <List
-						header={ username }
+            header={ username }
             dataSource={data}
             renderItem={item => (
               <List.Item key={item.id}>
@@ -73,11 +75,21 @@ export default function UserReposList() {
                   title={item.name}
                   description={item.stargazers_count}
                 />
-                <div>Content</div>
+                <div>
+                  <Link to={`/home/users/${username}/repos/${item.name}`}>
+                    <Button
+                      shape='round'
+                      icon={<MessageOutlined />}
+                      style={{ background: '#3397cf', color: '#fff' }}
+                    >
+                      內容
+                    </Button>
+                  </Link>
+                </div>
               </List.Item>
             )}
           />
         </InfiniteScroll>
-      </div>
+      </div>   
     )
 }
