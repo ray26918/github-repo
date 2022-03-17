@@ -27,6 +27,9 @@ export default function UserReposList() {
 						setCurPage(curPage + 1)
 						setData([ ...data, ...resp ])
 						setLoading(false)
+            if ( resp.length < 10 ){
+              setHasmoreData(false)
+            }
 					}
 					else{
 						setLoading(false)
@@ -42,6 +45,10 @@ export default function UserReposList() {
     useEffect(() => {
 	    loadMoreData();
     }, []);
+
+    useEffect(() =>{
+      console.log(data)
+    }, [data])
 
 
     return(
@@ -67,7 +74,7 @@ export default function UserReposList() {
            }}
         >
           <List
-            header={ username }
+            header={username}
             dataSource={data}
             renderItem={item => (
               <List.Item key={item.id}>

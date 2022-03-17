@@ -32,7 +32,7 @@ export default function SingleReposPage(){
         <Row style={{ paddingTop: '10px' }} justify='center'>
           <Col span={12}>
             <Card
-             style={{ padding: '10px 100px ', height: 'auto' }}
+             style={{ padding: '10px 75px ', height: 'auto' }}
             >
               <Skeleton loading={loading} avatar active>
                 <Meta
@@ -41,26 +41,28 @@ export default function SingleReposPage(){
                   description={
                     <>
                       <Row>
-                        <Col>
-                          description: {data.description}
+                        <Col span={21}>
+                         description: {data.description}
                         </Col>
+                        <Col span={3}/>
                       </Row>
                       <Row>
-                        <Col span={20}>
+                        <Col span={21}>
                           stargazers_count: {data.stargazers_count}
                         </Col>
-                        <Col span={4}>
-                          <Button 
-                            shape='round'
-                            style={{ background: '#3397cf', color: '#fff' }}
-                            icon={<MessageOutlined/>}
-                            onClick={() => {
-                              window.location.href=`https://github.com/${username}/${repo}`
-                            }}
-                          >
-                            至github
-                          </Button>
-                        </Col>
+                        <Col span={3}/>
+                      </Row>
+                      <Row justify='end'>
+                        <Button 
+                          shape='round'
+                          style={{ background: '#3397cf', color: '#fff' }}
+                          icon={<MessageOutlined/>}
+                          onClick={() => {
+                            window.location.href=`https://github.com/${username}/${repo}`
+                          }}
+                        >
+                          至github
+                        </Button>
                       </Row>
                     </>
                   }

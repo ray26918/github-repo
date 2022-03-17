@@ -9,3 +9,7 @@
 .ant-list-header{
   text-align: center;
 }
+
+.ant-card{
+  border-radius: 20px;
+}
