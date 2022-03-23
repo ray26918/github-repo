@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom'
+import { Route, Routes, HashRouter, Navigate } from 'react-router-dom'
 import RepositoryList from "./pages/UserReposList";
 import App from "./App";
 import UserReposList from "./pages/UserReposList";
@@ -8,7 +8,7 @@ import SingleReposPage from "./pages/SingleReposPage";
 
 const RouterConfig = () =>{
   return(
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<App />}>
           <Route 
@@ -19,7 +19,7 @@ const RouterConfig = () =>{
           <Route path="/home/users/:username/repos/:repo" element={<SingleReposPage/> }/>
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
