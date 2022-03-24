@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { List, message, Avatar, Skeleton, Divider, Button } from 'antd';
+import { List, message, Avatar, Skeleton, Divider, Button, Tabs } from 'antd';
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserRepos } from "../redux/action";
@@ -8,6 +8,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function UserReposList() {
 
+    const { TabPane } = Tabs
     const dispatch = useDispatch()
     const userReopsList = useSelector((state) => state.userRepos.userReposList)
     const [ data, setData ] = useState([])
