@@ -11,9 +11,9 @@ const INTIAL_STATE = {
 export default (state = INTIAL_STATE, action) => {
     switch (action.type) {
       case GET_USERREPOS:
-        return { ...state, userReposList: action.payload }
+        return { ...state, userReposList: state.userReposList.concat(action.payload) }
       case GET_REPOSITORY:
-        return { ...state, repository: action.payload}
+        return { ...state, singlerRepository: action.payload}
       default:
         return state
     }

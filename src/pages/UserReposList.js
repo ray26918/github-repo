@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { List, message, Avatar, Skeleton, Divider, Button, Tabs } from 'antd';
+import { List, message, Avatar, Skeleton, Divider, Button, Tabs, Row, Col } from 'antd';
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserRepos } from "../redux/action";
-import { MessageOutlined } from '@ant-design/icons'
+import { MessageOutlined, StarOutlined } from '@ant-design/icons'
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function UserReposList() {
@@ -23,12 +23,11 @@ export default function UserReposList() {
         }
         setLoading(true);
         dispatch(getUserRepos(username, curPage))
-        .then(resp =>{
-					if( resp.length !== 0 ){
+        .then(() =>{
+					if( userReopsList.length !== 0 ){
 						setCurPage(curPage + 1)
-						setData([ ...data, ...resp ])
 						setLoading(false)
-            if ( resp.length < 10 ){
+            if ( userReopsList.length < 10 ){
               setHasmoreData(false)
             }
 					}
@@ -47,10 +46,13 @@ export default function UserReposList() {
 	    loadMoreData();
     }, []);
 
-    useEffect(() =>{
-      console.log(data)
-    }, [data])
+    // useEffect(() =>{
+    //   console.log(data)
+    // }, [data])
 
+    useEffect(() => {
+      console.log(userReopsList)
+    }, [userReopsList])
 
     return(
       <div
@@ -62,7 +64,7 @@ export default function UserReposList() {
         }}
       >
         <InfiniteScroll
-          dataLength={data.length}
+          dataLength={userReopsList.length}
           next={loadMoreData}
           hasMore={hasMoreData}
           loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
@@ -76,24 +78,36 @@ export default function UserReposList() {
         >
           <List
             header={username}
-            dataSource={data}
+            dataSource={userReopsList}
             renderItem={item => (
               <List.Item key={item.id}>
                 <List.Item.Meta
-                  title={item.name}
-                  description={item.stargazers_count}
-                />
-                <div>
-                  <Link to={`/home/users/${username}/repos/${item.name}`}>
-                    <Button
-                      shape='round'
-                      icon={<MessageOutlined />}
-                      style={{ background: '#3397cf', color: '#fff' }}
-                    >
-                      內容
-                    </Button>
+                  title={                  
+                  <Link 
+                    className="a-Link"
+                    to={`/home/users/${username}/repos/${item.name}`}
+                    style={{ color: '#0969da' }}
+                  >
+                      {item.name}
                   </Link>
-                </div>
+                  }
+                  description={
+                    <>
+                      <Row>
+                          {item.description}
+                      </Row>
+                      <Row>
+                        <Button
+                            icon={<StarOutlined />}
+                            href={`https://github.com/${username}/${item.name}/stargazers`}
+                            type='text'
+                          >
+                          {item.stargazers_count}
+                        </Button>
+                      </Row>
+                    </>
+                  }
+                />
               </List.Item>
             )}
           />

@@ -13,3 +13,7 @@
 .ant-card{
   border-radius: 20px;
 }
+
+.a-Link:hover{
+  text-decoration: underline !important;
+}
