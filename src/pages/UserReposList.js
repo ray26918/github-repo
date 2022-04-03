@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { List, message, Avatar, Skeleton, Divider, Button, Tabs, Row, Col } from 'antd';
+import { List, Skeleton, Divider, Button, Row, notification } from 'antd';
 import { Link, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUserRepos } from "../redux/action";
-import { MessageOutlined, StarOutlined } from '@ant-design/icons'
+import { StarOutlined } from '@ant-design/icons'
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function UserReposList() {
 
-    const { TabPane } = Tabs
     const dispatch = useDispatch()
-    const userReopsList = useSelector((state) => state.userRepos.userReposList)
     const [ data, setData ] = useState([])
 		const [ hasMoreData, setHasmoreData ] = useState(true)
 		const [ curPage, setCurPage ] = useState(1)
@@ -23,11 +21,13 @@ export default function UserReposList() {
         }
         setLoading(true);
         dispatch(getUserRepos(username, curPage))
-        .then(() =>{
-					if( userReopsList.length !== 0 ){
+        .then((resp) =>{
+          console.log(resp)
+					if( resp.length !== 0 ){
+            setData([...data, ...resp.data])
 						setCurPage(curPage + 1)
 						setLoading(false)
-            if ( userReopsList.length < 10 ){
+            if ( resp.data.length < 10 ){
               setHasmoreData(false)
             }
 					}
@@ -39,6 +39,11 @@ export default function UserReposList() {
 				.catch((resp) => {
 					console.log(resp)
 					setLoading(false)
+          setHasmoreData(false)
+          notification.error({
+            message: 'Error',
+            description: `${resp}`
+          })
 				})
       };
 
@@ -50,9 +55,6 @@ export default function UserReposList() {
     //   console.log(data)
     // }, [data])
 
-    useEffect(() => {
-      console.log(userReopsList)
-    }, [userReopsList])
 
     return(
       <div
@@ -64,7 +66,7 @@ export default function UserReposList() {
         }}
       >
         <InfiniteScroll
-          dataLength={userReopsList.length}
+          dataLength={data.length}
           next={loadMoreData}
           hasMore={hasMoreData}
           loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
@@ -78,7 +80,7 @@ export default function UserReposList() {
         >
           <List
             header={username}
-            dataSource={userReopsList}
+            dataSource={data}
             renderItem={item => (
               <List.Item key={item.id}>
                 <List.Item.Meta

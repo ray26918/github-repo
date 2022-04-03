@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes, HashRouter, Navigate } from 'react-router-dom'
-import RepositoryList from "./pages/UserReposList";
 import App from "./App";
 import UserReposList from "./pages/UserReposList";
 import Home from "./pages/Home";

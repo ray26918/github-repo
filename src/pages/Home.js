@@ -2,20 +2,20 @@ import { Button, Col, Input, Row } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-
-
 export default function Home(){
 
 	const [ inputUserName, setInputUserName ] = useState('')
 
+
 	return(
 		<>
 			<Row style={{ justifyContent:'center', paddingTop: '10px' }} >
-					<Col span={4}>
+					<Col span={2}>
 					輸入Github Username
 					</Col>
 					<Col span={4}>
 					<Input
+							style={{ borderRadius: '15px' }}
 							onChange={(e) => setInputUserName(e.target.value)}
 					/>
 					</Col>

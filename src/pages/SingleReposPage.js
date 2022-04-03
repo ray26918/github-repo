@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { getRepository } from "../redux/action"
+import { getSingleRepository } from "../redux/action"
 import { Card, Skeleton, Avatar, Row, Col, Button } from "antd"
-import { MessageOutlined } from "@ant-design/icons"
+import { MessageOutlined, StarOutlined } from "@ant-design/icons"
 
 export default function SingleReposPage(){
 
@@ -15,16 +15,13 @@ export default function SingleReposPage(){
 
   useEffect(() =>{
     setLoading(true)
-    dispatch(getRepository(username, repo))
+    dispatch(getSingleRepository(username, repo))
     .then((resp) => {
       setData(resp)
       setLoading(false)
     })
   }, [])
 
-  useEffect(() =>{
-    console.log(data)
-  }, [data])
 
   return(
     <>
@@ -42,13 +39,19 @@ export default function SingleReposPage(){
                     <>
                       <Row>
                         <Col span={21}>
-                         description: {data.description}
+                         {data.description}
                         </Col>
                         <Col span={3}/>
                       </Row>
                       <Row>
                         <Col span={21}>
-                          stargazers_count: {data.stargazers_count}
+                        <Button
+                            icon={<StarOutlined />}
+                            href={`https://github.com/${username}/${data.name}/stargazers`}
+                            type='text'
+                          >
+                          {data.stargazers_count}
+                        </Button>
                         </Col>
                         <Col span={3}/>
                       </Row>
@@ -58,7 +61,10 @@ export default function SingleReposPage(){
                           style={{ background: '#3397cf', color: '#fff' }}
                           icon={<MessageOutlined/>}
                           onClick={() => {
-                            window.location.href=`https://github.com/${username}/${repo}`
+                            window.open(
+                              `https://github.com/${username}/${repo}`,
+                              '_blank'
+                            )
                           }}
                         >
                           至github

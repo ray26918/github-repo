@@ -7,10 +7,10 @@ export const getUserRepos = (userName, curPage) => async (dispatch) =>{
         page: curPage
     }})
     dispatch({ type: GET_USERREPOS, payload: resp.data })
-    return resp.data
+    return resp
 }
 
-export const getRepository = (owner, repo) => async (dispatch) =>{
+export const getSingleRepository = (owner, repo) => async (dispatch) =>{
     const resp = await requests.get(`/repos/${owner}/${repo}`)
     dispatch({ type: GET_REPOSITORY, payload: resp.data })
     return resp.data
