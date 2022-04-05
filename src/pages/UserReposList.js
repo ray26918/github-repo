@@ -22,7 +22,6 @@ export default function UserReposList() {
         setLoading(true);
         dispatch(getUserRepos(username, curPage))
         .then((resp) =>{
-          console.log(resp)
 					if( resp.length !== 0 ){
             setData([...data, ...resp.data])
 						setCurPage(curPage + 1)
@@ -50,10 +49,6 @@ export default function UserReposList() {
     useEffect(() => {
 	    loadMoreData();
     }, []);
-
-    // useEffect(() =>{
-    //   console.log(data)
-    // }, [data])
 
 
     return(
